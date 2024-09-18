@@ -1,30 +1,43 @@
 <% layout("/layouts/boilerplate") %>
-  <body>
-    <h3>Create a New Listing</h3>
-    <form method="POST" action="/listings">
-      <input name="listing[title]" placeholder="enter title" type="text" />
-      <br /><br />
-      <textarea
-        name="listing[description]"
-        placeholder="enter description"
-      ></textarea>
-      <br /><br />
-      <input
-        name="listing[image]"
-        placeholder="enter image URL/Link"
-        type="text"
-      />
-      <br /><br />
-      <input name="listing[price]" placeholder="enter price" type="number" />
-      <br /><br />
-      <input name="listing[country]" placeholder="enter country" type="text" />
-      <br /><br />
-      <input
-        name="listing[location]"
-        placeholder="enter location"
-        type="text"
-      />
-      <br /><br />
-      <button>Add</button>
-    </form>
+  <body style="background-color: #f0f2f5;">
+    <div class="container mt-5">
+      <div class="card shadow-lg" style="border-radius: 10px;">
+        <div class="card-header text-center bg-dark text-white" style="border-top-left-radius: 10px; border-top-right-radius: 10px;">
+          <h3 class="mb-0">Create a New Listing</h3>
+        </div>
+        <div class="card-body p-4">
+          <form method="POST" action="/listings">
+            <div class="mb-3">
+              <label for="title" class="form-label fw-bold">Title</label>
+              <input name="listing[title]" placeholder="Enter title" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label fw-bold">Description</label>
+              <textarea name="listing[description]" placeholder="Enter description" class="form-control border-0 shadow-sm" rows="4" style="border-radius: 5px;"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="image" class="form-label fw-bold">Image Link</label>
+              <input name="listing[image.url]" placeholder="Enter image URL/Link" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="price" class="form-label fw-bold">Price</label>
+                <input name="listing[price]" placeholder="Enter price" type="number" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="country" class="form-label fw-bold">Country</label>
+                <input name="listing[country]" placeholder="Enter country" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="location" class="form-label fw-bold">Location</label>
+              <input name="listing[location]" placeholder="Enter location" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+            </div>
+            <div class="text-center">
+              <button class="btn btn-success px-5 py-2 shadow-sm" style="border-radius: 5px;">Add Listing</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
