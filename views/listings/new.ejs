@@ -6,14 +6,16 @@
           <h3 class="mb-0">Create a New Listing</h3>
         </div>
         <div class="card-body p-4">
-          <form method="POST" action="/listings">
+          <form method="POST" action="/listings" novalidate class="needs-validation">
             <div class="mb-3">
               <label for="title" class="form-label fw-bold">Title</label>
-              <input name="listing[title]" placeholder="Enter title" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+              <input name="listing[title]" placeholder="Enter title" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" required/>
+              <div class="invalid-feedback">Please Enter a Title</div>
             </div>
             <div class="mb-3">
-              <label for="description" class="form-label fw-bold">Description</label>
-              <textarea name="listing[description]" placeholder="Enter description" class="form-control border-0 shadow-sm" rows="4" style="border-radius: 5px;"></textarea>
+              <label for="description" class="form-label fw-bold" >Description</label>
+              <textarea name="listing[description]" placeholder="Enter description" class="form-control border-0 shadow-sm" rows="4" style="border-radius: 5px" required></textarea>
+              <div class="invalid-feedback">Please Enter a short description</div>
             </div>
             <div class="mb-3">
               <label for="image" class="form-label fw-bold">Image Link</label>
@@ -21,23 +23,28 @@
             </div>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="price" class="form-label fw-bold">Price</label>
-                <input name="listing[price]" placeholder="Enter price" type="number" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+                <label for="price" class="form-label fw-bold" >Price</label>
+                <input name="listing[price]" placeholder="Enter price"  class="form-control border-0 shadow-sm" style="border-radius: 5px;" required/>
+                <div class="invalid-feedback">Please Enter a Valid Price</div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="country" class="form-label fw-bold">Country</label>
-                <input name="listing[country]" placeholder="Enter country" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+                <label for="country" class="form-label fw-bold" >Country</label>
+                <input name="listing[country]" placeholder="Enter country" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" required/>
+                <div class="invalid-feedback">Country name should be valid</div>
               </div>
             </div>
             <div class="mb-3">
-              <label for="location" class="form-label fw-bold">Location</label>
-              <input name="listing[location]" placeholder="Enter location" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" />
+              <label for="location" class="form-label fw-bold" >Location</label>
+              <input name="listing[location]" placeholder="Enter location" type="text" class="form-control border-0 shadow-sm" style="border-radius: 5px;" required/>
+              <div class="invalid-feedback">Location should be valid</div>
             </div>
             <div class="text-center">
-              <button class="btn btn-success px-5 py-2 shadow-sm" style="border-radius: 5px;">Add Listing</button>
+              <button class="btn btn-success px-5 py-2 shadow-sm" type="submit" style="border-radius: 5px;">Add Listing</button>
             </div>
           </form>
         </div>
       </div>
     </div>
+    <script src="/js/script.js"></script>
   </body>
+  
