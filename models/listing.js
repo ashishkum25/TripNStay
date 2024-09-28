@@ -1,15 +1,25 @@
 const mongoose = require("mongoose");
-mongoose.connect(``);
-
+mongoose.connect(`mongodb+srv://webashish44:Wildcraft17@cluster0.nqcyyfe.mongodb.net/TripNStay`);
+const Review = require("./review.js");
 const listingSchema = mongoose.Schema({
   title: "string",
   description: "string",
-  image: {
-    filename:"string",
-    url: "string",
-  },
+  image: "string",
   price: "number",
   location: "string",
   country: "string",
+  reviews: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Review"
+    },
+  ],
 });
+
+listingSchema.post("findOneAndDelete", async (listing) => {
+  if(listing) {
+    await Review.deleteMany({_id : {$in: listing.reviews}});
+  }
+});
+
 module.exports = mongoose.model("Listing",listingSchema);
