@@ -2,23 +2,29 @@
 <body class="container mt-5">
   <div class="card" style="width: 50rem;">
     <!-- Display the listing image at the top -->
-    <img src="<%= listing.image %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
+    <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem; object-fit: cover;">
     <h3 class="card-header"><%= listing.title %></h3>
     <div class="card-body">
       <ul class="list-group list-group-flush">
+        <li class="list-group-item"><strong>Owned By: </strong><i><%= listing.owner.username %></i></li>
         <li class="list-group-item"><strong>Description: </strong><%= listing.description %></li>
         <li class="list-group-item"><strong>Price: </strong>&#8377; <%= listing.price.toLocaleString("en-IN") %></li>
         <li class="list-group-item"><strong>Location: </strong><%= listing.location %></li>
         <li class="list-group-item"><strong>Country: </strong><%= listing.country %></li>
       </ul>
-      <br />
-      <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">Edit this Listing</a>
+      
+      <% if(currUser && listing.owner._id.equals(currUser._id)) { %>
+      <form method="GET" action="/listings/<%= listing._id %>/edit" class="mt-3">
+        <button class="btn btn-primary">Edit this Listing</button>
+      </form>
       <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" class="mt-3">
         <button class="btn btn-danger">Delete this listing</button>
       </form>
+    <% } %>
     </div>
     <hr>
     <div class="col-8 offset-2">
+      <% if(currUser) { %>
       <h4>Leave a Review</h4>
       <form method="POST" action="/listings/<%= listing._id %>/reviews" novalidate class="needs-validation">
         <!-- Rating Slider with Bootstrap -->
@@ -36,6 +42,7 @@
         <button class="btn btn-outline-dark">Submit</button>
       </form>
       <hr>
+      <% } %>
       <h4 class="mb-3">All Reviews</h4>
       <!-- Reviews section -->
       <div class="list-group">
@@ -45,10 +52,10 @@
         <% for(review of listing.reviews) { %>
           <div class="list-group-item list-group-item-action mb-3">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">Jane Doe</h5>
+              <h5 class="mb-1">@<%= review.author.username %></h5>
               <small class="text-muted"><%= review.rating %> stars</small>
             </div>
-            <p class="mb-1"><%= review.comment %></p>
+           <p class="mb-1"><%= review.comment %></p>
             <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" class="mt-2">
               <button class="btn btn-sm btn-outline-danger">Delete</button>
             </form>

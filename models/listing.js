@@ -4,7 +4,10 @@ const Review = require("./review.js");
 const listingSchema = mongoose.Schema({
   title: "string",
   description: "string",
-  image: "string",
+  image: {
+    url: String,
+    filename: String,
+  },
   price: "number",
   location: "string",
   country: "string",
@@ -14,6 +17,10 @@ const listingSchema = mongoose.Schema({
       ref: "Review"
     },
   ],
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 listingSchema.post("findOneAndDelete", async (listing) => {
