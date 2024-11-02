@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect(`mongodb+srv://webashish44:Wildcraft17@cluster0.nqcyyfe.mongodb.net/TripNStay`);
+mongoose.connect(``);
 
 const reviewSchema = mongoose.Schema({
     comment: "string",
