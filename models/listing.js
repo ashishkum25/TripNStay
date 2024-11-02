@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
-<<<<<<< HEAD
-=======
-mongoose.connect(``);
->>>>>>> ac132d166f6ec38fcc5bc54428d7fc7c1d114edb
+
+mongoose.connect(`mongodb+srv://webashish44:Wildcraft17@cluster0.nqcyyfe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+`);
 const Review = require("./review.js");
 
 const listingSchema = new mongoose.Schema({
