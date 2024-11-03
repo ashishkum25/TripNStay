@@ -1,6 +1,15 @@
 const Listing = require("../models/listing");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
+
+// Check if MAP_TOKEN is available
+if (!mapToken) {
+  console.error('Error: MAP_TOKEN is not defined in .env file');
+  process.exit(1); // Exit the process if MAP_TOKEN is not defined
+}
+
+console.log("Mapbox Token:", mapToken); // For debugging
+
 const geocodingClient = mbxGeocoding({ accessToken: mapToken });
 
 // Index Controller
@@ -37,60 +46,50 @@ module.exports.showListing = async (req, res) => {
 
 // Create Listing
 module.exports.createListing = async (req, res, next) => {
-    try {
-        // Perform forward geocoding to retrieve coordinates
-        const response = await geocodingClient.forwardGeocode({
-            query: req.body.listing.location,
-            limit: 1,
-        }).send();
+  try {
+    const response = await geocodingClient.forwardGeocode({
+      query: req.body.listing.location,
+      limit: 1,
+    }).send();
 
-        // Log the geocoding response for inspection
-        console.log("Geocoding API response:", JSON.stringify(response.body, null, 2));
+    console.log("Geocoding API response:", JSON.stringify(response.body, null, 2));
 
-        // Default geometry structure in case response is missing data
-        let geometry = {
-            type: 'Point',
-            coordinates: [0, 0]
-        };
+    let geometry = {
+      type: 'Point',
+      coordinates: [0, 0]
+    };
 
-        // If the response contains valid geometry, update the geometry object
-        if (response.body.features.length) {
-            const geoData = response.body.features[0].geometry;
-            geometry = {
-                type: geoData.type || 'Point',
-                coordinates: geoData.coordinates || [0, 0]
-            };
-        }
-
-        // Log the final geometry structure to ensure it's set correctly
-        console.log("Final geometry:", geometry);
-
-        // Retrieve image URL and filename
-        const url = req.file?.path || "";
-        const filename = req.file?.filename || "";
-
-        // Create a new listing with verified geometry
-        const newListing = new Listing({
-            ...req.body.listing,
-            owner: req.user._id,
-            image: { url, filename },
-            geometry: {
-                type: geometry.type,
-                coordinates: geometry.coordinates,
-            }
-        });
-
-        await newListing.save();
-        req.flash("success", "New Listing Created!");
-        res.redirect("/listings");
-    } catch (err) {
-        console.error("Error creating listing:", err);
-        next(err);
+    if (response.body.features.length) {
+      const geoData = response.body.features[0].geometry;
+      geometry = {
+        type: geoData.type || 'Point',
+        coordinates: geoData.coordinates || [0, 0]
+      };
     }
+
+    console.log("Final geometry:", geometry);
+
+    const url = req.file?.path || "";
+    const filename = req.file?.filename || "";
+
+    const newListing = new Listing({
+      ...req.body.listing,
+      owner: req.user._id,
+      image: { url, filename },
+      geometry: {
+        type: geometry.type,
+        coordinates: geometry.coordinates,
+      }
+    });
+
+    await newListing.save();
+    req.flash("success", "New Listing Created!");
+    res.redirect("/listings");
+  } catch (err) {
+    console.error("Error creating listing:", err);
+    next(err);
+  }
 };
-
-
-   
 
 // Render Edit Form
 module.exports.renderEditForm = async (req, res) => {

@@ -17,6 +17,7 @@ const userRouter = require("./routes/user.js");
 
 // Ensure the ATLASDB_URL is set correctly in your .env file
 const dbUrl = process.env.ATLASDB_URL; // This should now be corrected with the proper connection string
+
 // Function to connect to MongoDB
 async function connectDB() {
   if (mongoose.connection.readyState === 0) { // Check if disconnected
